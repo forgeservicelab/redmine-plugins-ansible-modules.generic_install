@@ -8,6 +8,14 @@
     repo: "{{ plugin_repo }}"
     dest: "{{ redmine_dir }}/plugins/{{ plugin_name }}"
 
+- name: Ensure directory permissions
+  file:
+    path: "{{ redmine_dir }}/plugins/{{ plugin_name }}"
+    owner: "{{ sudo_user }}"
+    group: "{{ sudo_user }}"
+    recurse: yes
+    state: directory
+
 - name: Install plugin gems
   command: bundle install --without development test
   args:
