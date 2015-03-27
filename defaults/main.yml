@@ -1,0 +1,3 @@
+---
+# defaults file for redmine_cas
+sudo_user: redmine

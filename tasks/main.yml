@@ -1,0 +1,25 @@
+---
+# tasks file for redmine_cas
+
+- name: Fetch from git
+  git:
+    accept_hostkey: yes
+    ssh_opts: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+    repo: "{{ plugin_repo }}"
+    dest: "{{ redmine_dir }}/plugins/"
+
+- name: Install plugin gems
+  command: bundle install --without development test
+  args:
+    chdir: "{{ redmine_dir }}"
+  environment:
+    RAILS_ENV: production
+  # sudo_user: "{{ sudo_user }}"
+
+- name: Migrate plugins
+  command: bundle exec rake redmine:plugins:migrate
+  args:
+    chdir: "{{ redmine_dir }}"
+  environment:
+    RAILS_ENV: production
+  sudo_user: "{{ sudo_user }}"
