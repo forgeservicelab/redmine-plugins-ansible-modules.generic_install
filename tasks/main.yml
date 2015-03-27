@@ -6,7 +6,7 @@
     accept_hostkey: yes
     ssh_opts: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
     repo: "{{ plugin_repo }}"
-    dest: "{{ redmine_dir }}/plugins/"
+    dest: "{{ redmine_dir }}/plugins/{{ plugin_name }}"
 
 - name: Install plugin gems
   command: bundle install --without development test
