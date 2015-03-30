@@ -1,2 +1,6 @@
 ---
 # handlers file for redmine_cas
+- name: restart redmine
+  service:
+    name: thin
+    state: restarted

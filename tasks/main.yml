@@ -7,6 +7,7 @@
     ssh_opts: -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
     repo: "{{ plugin_repo }}"
     dest: "{{ redmine_dir }}/plugins/{{ plugin_name }}"
+  notify: restart redmine
 
 - name: Ensure directory permissions
   file:
@@ -15,6 +16,7 @@
     group: "{{ sudo_user }}"
     recurse: yes
     state: directory
+  notify: restart redmine
 
 - name: Install plugin gems
   command: bundle install --without development test
@@ -23,6 +25,7 @@
   environment:
     RAILS_ENV: production
   # sudo_user: "{{ sudo_user }}"
+  notify: restart redmine
 
 - name: Migrate plugins
   command: bundle exec rake redmine:plugins:migrate
@@ -31,3 +34,4 @@
   environment:
     RAILS_ENV: production
   sudo_user: "{{ sudo_user }}"
+  notify: restart redmine
