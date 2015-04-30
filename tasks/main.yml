@@ -18,12 +18,12 @@
   notify: restart redmine
 
 - name: "{{ plugin_name }} | Install plugin gems"
-  command: bundle install --without development test
+  command: bundle install --path vendor/bundle --without development test
   args:
     chdir: "{{ redmine_dir }}"
   environment:
     RAILS_ENV: production
-  # sudo_user: "{{ sudo_user }}"
+  sudo_user: "{{ sudo_user }}"
   notify: restart redmine
 
 - name: "{{ plugin_name }} | Migrate plugins"
